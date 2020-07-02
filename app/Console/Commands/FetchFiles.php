@@ -7,10 +7,10 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Spatie\Regex\Regex;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 use Symfony\Component\DomCrawler\Crawler;
+use Illuminate\Support\Facades\File as LaravelFile;
 
 class FetchFiles extends Command
 {
@@ -57,19 +57,41 @@ class FetchFiles extends Command
         $links->each(function (Crawler $node) use ($httpClient) {
             $text = $node->text();
             $url = $node->attr('href');
-            $fileContents = $httpClient->get($url)->getBody()->getContents();
-
-            $publishedAt = Carbon::createFromFormat(
-                'd.m.Y',
-                Regex::match('/([123]0|[012][1-9]|31).(0[1-9]|1[012]).(19[0-9]{2}|2[0-9]{3})$/', $text)->result()
-            );
-
 
             $originalFilename = basename($url);
 
-            Storage::disk('local')->put('files/' . $originalFilename, $fileContents);
+            File::whereOriginalFilename($originalFilename)->firstOr(function () use ($httpClient, $url, $text, $originalFilename) {
+                $fileContents = $httpClient->get($url)->getBody()->getContents();
 
-            $this->line('SAVED');
+                $no = Regex::match('/([1-9]|[1-9][0-9])\d+/', Regex::match('/Ausgabe Nr. ([1-9]|[1-9][0-9])\d+/', $text)->result())->result();
+                $publishedAt = Carbon::createFromFormat(
+                    'd.m.Y',
+                    Regex::match('/([123]0|[012][1-9]|31)\.(0[1-9]|1[012])\.(19[0-9]{2}|2[0-9]{3})$/', $text)->result()
+                );
+                $extension = LaravelFile::extension("files/{$originalFilename}");
+
+                $file = new File();
+                $file->no = $no;
+                $file->original_filename = $originalFilename;
+                $file->mimetype = '/';
+                $file->extension = $extension;
+                $file->size = 0;
+                $file->published_at = $publishedAt;
+
+                $file->save();
+
+                Storage::disk('local')->put('files/' . $file->id . '.' . $extension, $fileContents);
+
+                $mimetype = Storage::disk('local')->mimeType('files/' . $file->id . '.' . $extension);
+                $size = Storage::disk('local')->size('files/' . $file->id . '.' . $extension);
+
+                $file->mimetype = $mimetype;
+                $file->size = $size;
+
+                $file->save();
+
+                $this->line('File #' . $no . ' ' . $publishedAt->toDateString() . ' saved.');
+            });
         });
     }
 }
