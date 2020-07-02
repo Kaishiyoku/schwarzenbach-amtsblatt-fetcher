@@ -12,5 +12,21 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    $files = \App\Models\File::orderBy('no', 'desc')->get();
+
+    return view('home', compact('files'));
 });
+
+$router->get('/file/{id}', ['as' => 'files.show', function ($id) {
+    $file = \App\Models\File::find($id);
+
+    if (!$file) {
+        abort(\Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND);
+    }
+
+    $fileContents = Storage::disk('local')->get('files/' . $file->id . '.' . $file->extension);
+
+    return response($fileContents, \Symfony\Component\HttpFoundation\Response::HTTP_OK)
+        ->header('Content-Type', $file->mimetype)
+        ->header('Content-disposition', "inline; filename=\"{$file->no} vom {$file->published_at->format('d.m.Y')}\"");
+}]);
