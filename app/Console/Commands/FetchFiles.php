@@ -80,17 +80,19 @@ class FetchFiles extends Command
 
                 $file->save();
 
-                Storage::disk('local')->put('files/' . $file->id . '.' . $extension, $fileContents);
+                $filePath = "files/{$file->id}.{$extension}";
 
-                $mimetype = Storage::disk('local')->mimeType('files/' . $file->id . '.' . $extension);
-                $size = Storage::disk('local')->size('files/' . $file->id . '.' . $extension);
+                Storage::disk('local')->put($filePath, $fileContents);
+
+                $mimetype = Storage::disk('local')->mimeType($filePath);
+                $size = Storage::disk('local')->size($filePath);
 
                 $file->mimetype = $mimetype;
                 $file->size = $size;
 
                 $file->save();
 
-                $this->line('File #' . $no . ' ' . $publishedAt->toDateString() . ' saved.');
+                $this->line("File #{$no} {$publishedAt->toDateString()} saved.");
             });
         });
     }
