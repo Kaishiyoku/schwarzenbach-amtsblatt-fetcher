@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CreateUser;
+use App\Console\Commands\FetchFiles;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -16,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected $commands = array(
         \Laravelista\LumenVendorPublish\VendorPublishCommand::class,
         CreateUser::class,
+        FetchFiles::class,
     );
 
     /**
