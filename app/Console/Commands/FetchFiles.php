@@ -76,7 +76,6 @@ class FetchFiles extends Command
                 $file->mimetype = '/';
                 $file->extension = $extension;
                 $file->size = 0;
-                $file->published_at = $publishedAt;
 
                 $file->save();
 
@@ -89,6 +88,7 @@ class FetchFiles extends Command
 
                 $file->mimetype = $mimetype;
                 $file->size = $size;
+                $file->published_at = $publishedAt;
 
                 $file->save();
 
