@@ -36,6 +36,7 @@ class FileFetched extends Mailable
     public function build()
     {
         return $this->markdown('emails.files.fetched', ['file' => $this->file])
+            ->subject('Neues Amtsblatt verfügbar')
             ->attachFromStorageDisk('local', "files/{$this->file->id}.{$this->file->extension}");
     }
 }
