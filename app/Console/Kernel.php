@@ -28,6 +28,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //
+        $schedule->command(FetchFiles::class)->hourly()->unlessBetween('01:00', '04:00');
     }
 }
