@@ -2,10 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\FileFetched;
 use App\Models\File;
+use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Regex\Regex;
 use Symfony\Component\CssSelector\CssSelectorConverter;
@@ -91,6 +94,13 @@ class FetchFiles extends Command
                 $file->published_at = $publishedAt;
 
                 $file->save();
+
+                // Send notification mails
+                User::all()->pluck('email')->each(function ($email) use ($file) {
+                    Mail::to($email)->send(new FileFetched($file));
+
+                    $this->line("Sent mail to {$email}");
+                });
 
                 $this->line("File #{$no} {$publishedAt->toDateString()} saved.");
             });
