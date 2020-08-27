@@ -6,15 +6,33 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.3.1/dist/siimple.min.css">
+    <link media="all" type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" charset="utf-8"></script>
+
+    <style>
+        html,
+        body {
+            font-size: 16px;
+        }
+
+        main {
+            margin-top: 3rem;
+        }
+
+        footer {
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="siimple-content siimple-content--large">
+    <main class="ui container main">
         @yield('content')
 
-        <footer class="siimple--mt-5">
+        <footer>
             v{{ env('APP_VERSION') }}
         </footer>
-    </div>
+    </main>
 </body>
 </html>

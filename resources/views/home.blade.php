@@ -9,9 +9,9 @@
         </div>
     @endif
 
-    <div class="siimple-list siimple-list--hover">
+    <div class="ui fluid vertical menu">
         @foreach ($files as $file)
-            <a class="siimple-list-item" href="{{ route('files.show', ['id' => $file]) }}">
+            <a class="item" href="{{ route('files.show', ['id' => $file]) }}">
                 #{{ $file->no }}
                 vom
                 {{ $file->published_at->format('d.m.Y') }}
