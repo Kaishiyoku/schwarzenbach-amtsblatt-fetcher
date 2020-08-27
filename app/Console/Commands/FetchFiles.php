@@ -69,7 +69,7 @@ class FetchFiles extends Command
                 $no = Regex::match('/([1-9]|[1-9][0-9])\d+/', Regex::match('/Ausgabe Nr. ([1-9]|[1-9][0-9])\d+/', $text)->result())->result();
                 $publishedAt = Carbon::createFromFormat(
                     'd.m.Y',
-                    Regex::match('/([123]0|[012][1-9]|31)\.(0[1-9]|1[012])\.(19[0-9]{2}|2[0-9]{3})$/', $text)->result()
+                    Regex::match('/([123]0|[012][1-9]|31)\.(0[1-9]|1[012])\.(19[0-9]{2}|2[0-9]{3})/', $text)->result()
                 );
                 $extension = LaravelFile::extension("files/{$originalFilename}");
 
