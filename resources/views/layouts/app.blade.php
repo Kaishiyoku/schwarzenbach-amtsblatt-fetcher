@@ -6,33 +6,19 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link media="all" type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" charset="utf-8"></script>
-
-    <style>
-        html,
-        body {
-            font-size: 16px;
-        }
-
-        main {
-            margin-top: 3rem;
-        }
-
-        footer {
-            margin-top: 3rem;
-            margin-bottom: 1rem;
-        }
-    </style>
+    <!-- Stylesheets -->
+    <link media="all" type="text/css" rel="stylesheet" href="{{ url('/css/app.css') }}">
 </head>
-<body>
-    <main class="ui container main">
+<body class="bg-gray-100 py-12">
+    <main class="container px-4 lg:px-20 mx-auto">
         @yield('content')
-
-        <footer>
-            v{{ env('APP_VERSION') }}
-        </footer>
     </main>
+
+    <footer class="container px-4 lg:px-20 mx-auto m-12">
+        v{{ env('APP_VERSION') }}
+    </footer>
 </body>
 </html>
