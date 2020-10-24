@@ -15,16 +15,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $extension
  * @property int $size
  * @property \Illuminate\Support\Carbon $published_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File whereExtension($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File whereMimetype($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File whereNo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File whereOriginalFilename($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File wherePublishedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|File newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|File query()
+ * @method static \Illuminate\Database\Eloquent\Builder|File whereExtension($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File whereMimetype($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File whereNo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File whereOriginalFilename($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File wherePublishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|File whereSize($value)
  * @mixin \Eloquent
  */
 class File extends Model

@@ -11,7 +11,7 @@
         @else
             <div class="flex flex-col">
                 @foreach ($files as $file)
-                    <a href="{{ route('files.show', ['id' => $file]) }}" class="px-4 py-2 border-b border-indigo-200 border-opacity-25 hover:bg-indigo-200 hover:bg-opacity-25 transition-colors ease-out duration-500">
+                    <a href="{{ route('files.show', ['slug' => toFileSlug($file)]) }}" class="px-4 py-2 border-b border-indigo-200 border-opacity-25 hover:bg-indigo-200 hover:bg-opacity-25 transition-colors ease-out duration-500">
                         #{{ $file->no }}
                         vom
                         {{ $file->published_at->format('d.m.Y') }}

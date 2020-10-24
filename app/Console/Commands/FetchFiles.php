@@ -63,6 +63,8 @@ class FetchFiles extends Command
 
             $originalFilename = basename($url);
 
+            dd($originalFilename);
+
             File::whereOriginalFilename($originalFilename)->firstOr(function () use ($httpClient, $url, $text, $originalFilename) {
                 $fileContents = $httpClient->get($url)->getBody()->getContents();
 

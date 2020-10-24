@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "972ead85e8091ff2e82424356b91f8ef",
+    "content-hash": "c10c4d20bbf703e97fc2710918e3bfa0",
     "packages": [
         {
             "name": "brick/math",
@@ -6101,16 +6101,16 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v2.8.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "affa55122f83575888d4ebf1728992686e8223de"
+                "reference": "0168e7256bfec301864bd1c75b0cc1804c3b874e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/affa55122f83575888d4ebf1728992686e8223de",
-                "reference": "affa55122f83575888d4ebf1728992686e8223de",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/0168e7256bfec301864bd1c75b0cc1804c3b874e",
+                "reference": "0168e7256bfec301864bd1c75b0cc1804c3b874e",
                 "shasum": ""
             },
             "require": {
@@ -6178,7 +6178,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-07T07:36:37+00:00"
+            "time": "2020-09-21T14:26:32+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -9167,7 +9167,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "barryvdh/laravel-ide-helper": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

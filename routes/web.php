@@ -17,10 +17,16 @@ $router->get('/', function () use ($router) {
     return view('home', compact('files'));
 });
 
-$router->get('/file/{id}', ['as' => 'files.show', function ($id) {
-    $file = \App\Models\File::find($id);
+$router->get('/file/{slug}', ['as' => 'files.show', function ($slug) {
+    try {
+        [$no, $date] = getFileIdAndDateFromSlug($slug);
+    } catch (\Carbon\Exceptions\InvalidFormatException $e) {
+        abort(\Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND);
+    }
 
-    if (!$file) {
+    $file = \App\Models\File::whereNo($no)->first();
+
+    if (!$file || $file->published_at->toDateString() !== $date->toDateString()) {
         abort(\Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND);
     }
 
@@ -28,5 +34,5 @@ $router->get('/file/{id}', ['as' => 'files.show', function ($id) {
 
     return response($fileContents, \Symfony\Component\HttpFoundation\Response::HTTP_OK)
         ->header('Content-Type', $file->mimetype)
-        ->header('Content-disposition', "inline; filename=\"{$file->no} vom {$file->published_at->format('d.m.Y')}\"");
+        ->header('Content-disposition', "inline; filename=\"{$file->no} vom {$file->published_at->format('d.m.Y')}.pdf\"");
 }]);
