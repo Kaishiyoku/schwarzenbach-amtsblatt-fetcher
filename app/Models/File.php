@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\File
@@ -28,6 +29,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class File extends Model
 {
+    use HasFactory;
+
     /**
      * Indicates if the model should be timestamped.
      *

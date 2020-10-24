@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = array(
-        \Laravelista\LumenVendorPublish\VendorPublishCommand::class,
+        \Kaishiyoku\LumenVendorPublish\VendorPublishCommand::class,
         CreateUser::class,
         FetchFiles::class,
     );
