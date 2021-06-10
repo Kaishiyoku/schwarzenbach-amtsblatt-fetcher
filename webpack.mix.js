@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,13 +13,9 @@ let mix = require('laravel-mix');
 
 mix
     .postCss('resources/css/app.css', 'public/css', [
-        require('postcss-import'),
         require('tailwindcss'),
-        require('postcss-nested'),
-        require('autoprefixer'),
     ]);
 
 if (mix.inProduction()) {
-    mix
-        .version();
+    mix.version();
 }
