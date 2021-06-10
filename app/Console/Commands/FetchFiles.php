@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Regex\Regex;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 use Symfony\Component\DomCrawler\Crawler;
@@ -58,17 +59,15 @@ class FetchFiles extends Command
         $links = $crawler->filterXPath($cssSelectorConverter->toXPath('.col-md-6 li > a'));
 
         $links->each(function (Crawler $node) use ($httpClient) {
-            $text = $node->text();
+            $text = str_replace("\xc2\xa0", '', $node->text());
             $url = $node->attr('href');
 
             $originalFilename = basename($url);
 
-            dd($originalFilename);
-
             File::whereOriginalFilename($originalFilename)->firstOr(function () use ($httpClient, $url, $text, $originalFilename) {
                 $fileContents = $httpClient->get($url)->getBody()->getContents();
 
-                $no = Regex::match('/([1-9]|[1-9][0-9])\d+/', Regex::match('/Ausgabe Nr. ([1-9]|[1-9][0-9])\d+/', $text)->result())->result();
+                $no = Regex::match('/\d+/', Regex::match('/Ausgabe Nr\. \d+/', $text)->result())->result();
                 $publishedAt = Carbon::createFromFormat(
                     'd.m.Y',
                     Regex::match('/([123]0|[012][1-9]|31)\.(0[1-9]|1[012])\.(19[0-9]{2}|2[0-9]{3})/', $text)->result()
@@ -97,6 +96,8 @@ class FetchFiles extends Command
 
                 $file->save();
 
+                $this->line("File #{$no} {$publishedAt->toDateString()} saved.");
+
                 // Send notification mails
                 User::all()->pluck('email')->each(function ($email) use ($file) {
                     Mail::to($email)->send(new FileFetched($file));
@@ -104,7 +105,7 @@ class FetchFiles extends Command
                     $this->line("Sent mail to {$email}");
                 });
 
-                $this->line("File #{$no} {$publishedAt->toDateString()} saved.");
+                $this->line('');
             });
         });
     }
