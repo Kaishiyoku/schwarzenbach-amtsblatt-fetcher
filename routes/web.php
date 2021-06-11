@@ -26,11 +26,7 @@ $router->get('/file/{slug}', ['as' => 'files.show', function ($slug) {
         abort(\Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND);
     }
 
-    $file = \App\Models\File::whereNo($no)->first();
-
-    if (!$file || $file->published_at->toDateString() !== $date->toDateString()) {
-        abort(\Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND);
-    }
+    $file = \App\Models\File::whereNo($no)->whereDate('published_at', $date)->firstOrFail();
 
     $fileContents = Storage::disk('local')->get('files/' . $file->id . '.' . $file->extension);
 
