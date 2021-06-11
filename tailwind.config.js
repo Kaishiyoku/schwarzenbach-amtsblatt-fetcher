@@ -9,9 +9,6 @@ module.exports = {
             fontFamily: {
                 sans: ['Open Sans', 'sans-serif'],
             },
-            colors: {
-
-            },
         }
     },
     variants: {},

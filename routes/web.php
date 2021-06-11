@@ -12,9 +12,11 @@
 */
 
 $router->get('/', function () use ($router) {
-    $files = \App\Models\File::orderBy('no', 'desc')->get();
+    $fileChunks = \App\Models\File::orderBy('published_at', 'desc')->get()->groupBy(function (\App\Models\File $file) {
+        return $file->published_at->format('Y');
+    });
 
-    return view('home', compact('files'));
+    return view('home', compact('fileChunks'));
 });
 
 $router->get('/file/{slug}', ['as' => 'files.show', function ($slug) {
