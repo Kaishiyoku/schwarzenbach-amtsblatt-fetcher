@@ -17,7 +17,7 @@
 
                     <div class="rounded overflow-hidden bg-white border border-gray-200 shadow-lg">
                         @foreach ($fileChunk as $file)
-                            <a href="{{ route('files.show', ['slug' => toFileSlug($file)]) }}" class="block px-4 py-2 border-b border-gray-100 hover:bg-indigo-100 transition-colors ease-out duration-300">
+                            <a href="{{ route('files.show', ['slug' => toFileSlug($file)]) }}" class="block px-4 py-2 border-b border-gray-100 hover:text-white hover:bg-indigo-500 transition-colors ease-in">
                                 #{{ $file->no }}
                                 vom
                                 {{ $file->published_at->format('d.m.Y') }}
