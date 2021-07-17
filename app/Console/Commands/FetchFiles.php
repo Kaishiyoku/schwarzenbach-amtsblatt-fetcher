@@ -97,12 +97,14 @@ class FetchFiles extends Command
                 $file->save();
 
                 $this->line("File #{$no} {$publishedAt->toDateString()} saved.");
+                \Log::info("File #{$no} {$publishedAt->toDateString()} saved.");
 
                 // Send notification mails
                 User::all()->pluck('email')->each(function ($email) use ($file) {
                     Mail::to($email)->send(new FileFetched($file));
 
                     $this->line("Sent mail to {$email}");
+                    \Log::info("Sent mail to {$email}");
                 });
 
                 $this->line('');
